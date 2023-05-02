@@ -112,16 +112,16 @@ function parseChordName(chordName: string): string[] {
     public name: string;
     public root: string;
     public quality: string;
-    public extensions: string[];
+    public extensions: string;
     public notes: number[];
     public inversion: number;
     
     constructor(root: string, quality: string, extensions: string[] = [], inversion: number) {
   
-      this.name = "CMajorsus2b9";
-      this.root = root;
-      this.quality = quality;
-      this.extensions = extensions;
+      this.name = inputString;
+      [this.root] = parseChordName(this.name);
+      [,this.quality] = parseChordName(this.name);
+      [,,this.extensions] = parseChordName(this.name);
       this.notes = [];
       this.inversion = inversion;
   
@@ -177,7 +177,7 @@ function parseChordName(chordName: string): string[] {
   
   
   
-  console.log("PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+  
   
   //testing code
   
