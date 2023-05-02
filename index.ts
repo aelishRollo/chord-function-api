@@ -1,3 +1,7 @@
+console.clear()
+
+let inputString = "CMajor7b9#11"    //this will be input from the user, from a textbook or something
+
 
 
 interface IntervalMap {     //this is all the intervals with sharps and flats, in terms of half-steps
@@ -57,20 +61,7 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   }
   
   
-  
-  function parseExtensions(extensions: string): string[] {    //sub-function
-    const regex = /([#b][0-9]+)/g;
-    const parsedExtensions = extensions.match(regex) || [];
-    return parsedExtensions;
-  }
-  
-  
-  function parseAddOrSusChords(extensions: string): string[] {  //sub-function
-    const regex = /([a-zA-Z]+[0-9]+)/g;
-    const parsedAddOrSusChord = extensions.match(regex) || [];
-    return parsedAddOrSusChord;
-  }
-  
+
   
   function removeDuplicateStringsFromArray(arr:string[]): string[] {    //sub-function
     const result: string[] = []
@@ -83,17 +74,22 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   }
   
   
-  
-  function parseAllExtensions(extensions: string): string[] {     //Primary function, for getting extensions from string
-    const alteredExtensions = parseExtensions(extensions);        
-    const standardExtensions = parseAddOrSusChords(extensions); 
-    const combinedExtensions = alteredExtensions.concat(standardExtensions);    //give it "sus4b9#11b9" and it returns ["sus4","b9","#11"]. 
-    let result: string[] = removeDuplicateStringsFromArray(combinedExtensions)
-    return result;
+  //console.log(parseChordName('Cmajor7b9#11')) returns ["C", "major7", "b9#11"]
+function parseChordName(chordName: string): string[] {
+  const result: string[] = ['', '', ''];
+  const regex = /^([A-Ga-g][#b]?)([^#b\s]*\d*)(.*)$/;
+  const matches = chordName.match(regex);
+
+  if (matches) {
+    result[0] = matches[1]; // root note
+    result[1] = matches[2]; // chord type
+    result[2] = matches[3]; // extensions or alterations
   }
+
+  return result;
+}
   
-  
-  
+  console.log(parseChordName(inputString))
   
   function addIntervalToChord(chord: number[], interval: string): number[] {      //not currently implimented yet.
     const intervalValue = intervalMap[interval];
@@ -107,23 +103,23 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   class Chord2 {
     public notes: number[] = [];
     
-    constructor(public letterName: string, public quality: string, public extensions: string[] = []) {}  //don't HAVE to initialize yet this way
+    constructor(public root: string, public quality: string, public extensions: string[] = []) {}  //don't HAVE to initialize yet this way
   }
   
   
   class Chord {
   
     public name: string;
-    public letterName: string;
+    public root: string;
     public quality: string;
     public extensions: string[];
     public notes: number[];
     public inversion: number;
     
-    constructor(letterName: string, quality: string, extensions: string[] = [], inversion: number) {
+    constructor(root: string, quality: string, extensions: string[] = [], inversion: number) {
   
-      this.name = "CMajorsus2b9"
-      this.letterName = letterName;
+      this.name = "CMajorsus2b9";
+      this.root = root;
       this.quality = quality;
       this.extensions = extensions;
       this.notes = [];
@@ -138,7 +134,7 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
     }
     
     printName(): void {
-      console.log(this.letterName, this.quality);
+      console.log(this.root, this.quality);
     }
     
     getNotes(): number[] {
@@ -150,7 +146,7 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   
   
   function setRoot(chord: Chord) {                              //refactor these to be methods of the chord object
-    chord.notes = [MusicalNotes.indexOf(chord.letterName)];
+    chord.notes = [MusicalNotes.indexOf(chord.root)];
   }
   
   
@@ -181,12 +177,14 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   
   
   
-  
+  console.log("PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
   
   //testing code
   
   
   let x = new Chord("C","major",["b9"],1)     //need to refactor this so that the argument is just "Cmajor6b9", and from that it gets its attributes
+  //will look like let x = newChord(parseChord(inputString))
+  //parseChord(Cmajor7b9) will return "C","major",["b9"],1
   
   
   console.log(x)
@@ -204,6 +202,11 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   
   
   
+
+  // Data flow: 1.inputString   2. [root,quality,extensions]  gets added to the chord in the constructor
+
+
+
   //Need to refactor the addIntervalToChord function:
   //1. Make it accept a Chord type and an interval like b5 or something. Use the integerMap for the logic.
   
