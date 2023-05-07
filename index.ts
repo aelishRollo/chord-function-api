@@ -1,6 +1,6 @@
 console.clear()
 
-let inputString = "CMajor7b9#11"    //this will be input from the user, from a textbook or something
+let inputString = "Cmajor7b9#11"    //this will be input from the user, from a textbook or something
 
 
 
@@ -89,8 +89,6 @@ function parseChordName(chordName: string): string[] {
   return result;
 }
   
-  console.log(parseChordName(inputString))
-  
   function addIntervalToChord(chord: number[], interval: string): number[] {      //not currently implimented yet.
     const intervalValue = intervalMap[interval];
     if (intervalValue === undefined) {
@@ -119,7 +117,7 @@ function parseChordName(chordName: string): string[] {
     constructor(root: string, quality: string, extensions: string[] = [], inversion: number) {
   
       this.name = inputString;
-      [this.root] = parseChordName(this.name);
+      [this.root] = parseChordName(this.name);          //using destructuring assignments to get the 1st, 2nd, and 3rd return values of the function      
       [,this.quality] = parseChordName(this.name);
       [,,this.extensions] = parseChordName(this.name);
       this.notes = [];
@@ -127,7 +125,9 @@ function parseChordName(chordName: string): string[] {
   
       setRoot(this)
       setThird(this)
-      this.notes.push( (this.notes[0] +7) % 12 );   //add the fifth. Will need to be refactored to take altered and augmented chords
+      setFifth(this)
+      setQuality(this)
+      //this.notes.push( (this.notes[0] +7) % 12 );   //add the fifth. Will need to be refactored to take altered and augmented chords
   
       this.notes = setInversion(this.notes,this.inversion)
       
@@ -143,25 +143,88 @@ function parseChordName(chordName: string): string[] {
   }
   
   
+  let x = new Chord("C","minor",["b9#11"],0) 
   
-  
+
+  console.log(x)
+
+
   function setRoot(chord: Chord) {                              //refactor these to be methods of the chord object
     chord.notes = [MusicalNotes.indexOf(chord.root)];
   }
   
   
-  function setThird(chord: Chord) {
-    if (chord.quality == "minor") {
-      chord.notes.push((chord.notes[0] +3) % 12 );
+  function setThird(chord: Chord) {                 //this function should handle sus chord logic. Just an if (sus) then do nothing kinda thing
+    if (chord.quality.includes("minor")) {
+      chord.notes.push((chord.notes[0] +3) % 12 );  //add the minor third to chord.notes
     }
-   else if (chord.quality == "major") {
-      chord.notes.push((chord.notes[0] +4) % 12 );
+   else if (chord.quality.includes("major")) {
+      chord.notes.push((chord.notes[0] +4) % 12 );  //add the major third to chord.notes
     }
   }
+
+  function setFifth(chord: Chord) {
+    chord.notes.push((chord.notes[0] +7) % 12)
+  };
+
+  function setQuality(chord: Chord) {
+    if (chord.quality == "7") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "9") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "major7") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "minor7") {
+      chord.notes.push((chord.notes[0] +10) % 12 )
+    }
+    if (chord.quality == "major6") {
+      chord.notes.push((chord.notes[0] +9) % 12 )
+    }
+    if (chord.quality == "minor6") {
+      chord.notes.push((chord.notes[0] +9) % 12 )
+    }
+    if (chord.quality == "sus2") {
+      chord.notes.push((chord.notes[0] +11) % 12 )    //work out logic for these in a bit :) all of them up to here are correct
+    }
+    if (chord.quality == "sus4") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "add4") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "add2") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "add9") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "augmented") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "diminished") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "halfdiminished") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "major13") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "lydian") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    if (chord.quality == "6/9") {
+      chord.notes.push((chord.notes[0] +11) % 12 )
+    }
+    
+  };
   
-  
-  
-  
+
+
+
   
   function setInversion(notes: number[], inversion: number) {   //Refactor this one in the same way
   
@@ -176,20 +239,24 @@ function parseChordName(chordName: string): string[] {
   }
   
   
+
+  function invertNotesAroundKeyCenter(chord: Chord) {
+    for (let i = 0; i < chord.notes.length; i++) {
+      console.log(chord.notes[i])
+    }
+  };
   
+  invertNotesAroundKeyCenter(x)
   
   
   //testing code
   
-  
-  let x = new Chord("C","major",["b9"],1)     //need to refactor this so that the argument is just "Cmajor6b9", and from that it gets its attributes
+       //need to refactor this so that the argument is just "Cmajor6b9", and from that it gets its attributes
   //will look like let x = newChord(parseChord(inputString))
   //parseChord(Cmajor7b9) will return "C","major",["b9"],1
   
   
-  console.log(x)
-   
-  
+
   
   
   const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user
@@ -200,7 +267,7 @@ function parseChordName(chordName: string): string[] {
   
   
   
-  
+  //still need to make it so capitalization doesn't matter
   
 
   // Data flow: 1.inputString   2. [root,quality,extensions]  gets added to the chord in the constructor
