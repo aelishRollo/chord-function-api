@@ -3,6 +3,10 @@ console.clear()
 let inputString = "Cmajor7b9#11"    //this will be input from the user, from a textbook or something
 
 
+const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user
+  
+
+
 
 interface IntervalMap {     //this is all the intervals with sharps and flats, in terms of half-steps
     [interval: string]: number;
@@ -126,7 +130,6 @@ function parseChordName(chordName: string): string[] {
       setRoot(this)
       setThird(this)
       setFifth(this)
-      setQuality(this)
       //this.notes.push( (this.notes[0] +7) % 12 );   //add the fifth. Will need to be refactored to take altered and augmented chords
   
       this.notes = setInversion(this.notes,this.inversion)
@@ -145,6 +148,95 @@ function parseChordName(chordName: string): string[] {
   
   let x = new Chord("C","minor",["b9#11"],0) 
   
+
+  //In the key of C, C,major, should return C,minor. 
+  //This would be based on the distance from the KeyCenter and the chord quality
+
+  function invertChord(chord: Chord): [number,string] {   //returns invertedRoot, invertedChordQuality
+    let resultNumber = 0
+    let resultString = ""
+
+    if (MusicalNotes.indexOf(chord.root) - MusicalNotes.indexOf(KeyCenter) == 0) {    //chords whose root is the key center
+
+      if (chord.quality == "major") {
+        resultNumber = 0
+        resultString = "minor"
+      };
+
+      if (chord.quality == "major7") {
+        resultNumber = 0
+        resultString = "minorb6"
+      };
+
+      if (chord.quality == "major6") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "7") {
+        resultNumber = 0
+        resultString = "minor6"
+      };
+
+      if (chord.quality == "9") {
+        resultNumber = 0
+        resultString = "figuoure me out"
+      };
+
+      if (chord.quality == "augmented") {
+        resultNumber = 7
+        resultString = "augmented"
+      };
+
+      if (chord.quality == "minor7") {
+        resultNumber = 0
+        resultString = "major6"
+      };
+
+      if (chord.quality == "minor6") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "diminished") {
+        resultNumber = 0
+        resultString = "figure me outr"
+      };
+
+      if (chord.quality == "halfDiminished") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "sus2") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "sus4") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "add2") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "add4") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+      if (chord.quality == "add9") {
+        resultNumber = 0
+        resultString = "figure me out"
+      };
+
+
+    };
+    return [resultNumber,resultString]
+  };
 
   console.log(x)
 
@@ -167,65 +259,7 @@ function parseChordName(chordName: string): string[] {
     chord.notes.push((chord.notes[0] +7) % 12)
   };
 
-  function setQuality(chord: Chord) {
-    if (chord.quality == "7") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "9") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "major7") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "minor7") {
-      chord.notes.push((chord.notes[0] +10) % 12 )
-    }
-    if (chord.quality == "major6") {
-      chord.notes.push((chord.notes[0] +9) % 12 )
-    }
-    if (chord.quality == "minor6") {
-      chord.notes.push((chord.notes[0] +9) % 12 )
-    }
-    if (chord.quality == "sus2") {
-      chord.notes.push((chord.notes[0] +11) % 12 )    //work out logic for these in a bit :) all of them up to here are correct
-    }
-    if (chord.quality == "sus4") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "add4") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "add2") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "add9") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "augmented") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "diminished") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "halfdiminished") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "major13") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "lydian") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
-    if (chord.quality == "6/9") {
-      chord.notes.push((chord.notes[0] +11) % 12 )
-    }
     
-  };
-  
-
-
-
-  
   function setInversion(notes: number[], inversion: number) {   //Refactor this one in the same way
   
     if (inversion >= notes.length) {
@@ -241,6 +275,7 @@ function parseChordName(chordName: string): string[] {
   
 
   function invertNotesAroundKeyCenter(chord: Chord) {
+    let result: number[] = [];
     for (let i = 0; i < chord.notes.length; i++) {
       console.log(chord.notes[i])
     }
@@ -258,8 +293,6 @@ function parseChordName(chordName: string): string[] {
   
 
   
-  
-  const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user
   
   
   //end testing code
