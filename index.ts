@@ -150,18 +150,18 @@ function parseChordName(chordName: string): string[] {
 
 
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
+  console.log(x)
+  console.log(invertChord(x))
 
   
   
-
-  //In the key of C, C,major, should return C,minor. 
-  //This would be based on the distance from the KeyCenter and the chord quality
 
   function invertChord(chord: Chord): [number,string] {   //returns invertedRoot, invertedChordQuality
     let resultNumber = 0
     let resultString = ""
+    let interval = MusicalNotes.indexOf(chord.root) - MusicalNotes.indexOf(KeyCenter)   //distance from key center to root of chord, in half steps
 
-    if (MusicalNotes.indexOf(chord.root) - MusicalNotes.indexOf(KeyCenter) == 0) {    //if statements for chords whose root is the key center
+    if (interval == 0) {    //if statements for chords whose root is the key center
 
       if (chord.quality == "major") {
         resultNumber = 0
