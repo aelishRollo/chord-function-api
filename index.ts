@@ -76,8 +76,7 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
     }
     return result
   }
-console.log("AAAAAAAA:")  
-console.log(parseChordName(inputString))
+
   
   //console.log(parseChordName('Cmajor7b9#11')) returns ["C", "major7", "b9#11"]
 function parseChordName(chordName: string): string[] {
@@ -119,7 +118,7 @@ function parseChordName(chordName: string): string[] {
     public notes: number[];
     public inversion: number;
     
-    constructor(root: string, quality: string, extensions: string[] = [], inversion: number) {
+    constructor(root: string, quality: string, extensions: string, inversion: number) {
   
       this.name = inputString;
       [this.root] = parseChordName(this.name);          //using destructuring assignments to get the 1st, 2nd, and 3rd return values of the function      
@@ -151,9 +150,12 @@ function parseChordInversion() {
   //should work with code block directly below here
 };
   
-  
+  //[parseChordName(inputString)[2]] evaluates to [ '' ] 
 
-  let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],[parseChordName(inputString)[2]],parseChordName(inputString)[3])
+  let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
+  console.log(x)
+  
+  
 
   //In the key of C, C,major, should return C,minor. 
   //This would be based on the distance from the KeyCenter and the chord quality
