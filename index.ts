@@ -1,9 +1,9 @@
 console.clear()
 
-let inputString = "Cmajor7b9#11"    //this will be input from the user, from a textbook or something
+let inputString = "cmajor6"    //this will be input from the user, from a textbook or something
 
 
-const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user
+const KeyCenter = "c"     //Keycenter should be a global variable for now. This will come from input from the user
   
 
 
@@ -76,7 +76,8 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
     }
     return result
   }
-  
+console.log("AAAAAAAA:")  
+console.log(parseChordName(inputString))
   
   //console.log(parseChordName('Cmajor7b9#11')) returns ["C", "major7", "b9#11"]
 function parseChordName(chordName: string): string[] {
@@ -90,9 +91,9 @@ function parseChordName(chordName: string): string[] {
     result[2] = matches[3]; // extensions or alterations
   }
 
-  return result;
+  return result;  //returns [root, chord type, extensions]
 }
-  
+
   function addIntervalToChord(chord: number[], interval: string): number[] {      //not currently implimented yet.
     const intervalValue = intervalMap[interval];
     if (intervalValue === undefined) {
@@ -144,10 +145,15 @@ function parseChordName(chordName: string): string[] {
       return this.notes;
     }
   }
+
+  
+function parseChordInversion() {
+  //should work with code block directly below here
+};
   
   
-  let x = new Chord("C","minor",["b9#11"],0) 
-  
+
+  let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],[parseChordName(inputString)[2]],parseChordName(inputString)[3])
 
   //In the key of C, C,major, should return C,minor. 
   //This would be based on the distance from the KeyCenter and the chord quality
@@ -156,7 +162,7 @@ function parseChordName(chordName: string): string[] {
     let resultNumber = 0
     let resultString = ""
 
-    if (MusicalNotes.indexOf(chord.root) - MusicalNotes.indexOf(KeyCenter) == 0) {    //chords whose root is the key center
+    if (MusicalNotes.indexOf(chord.root) - MusicalNotes.indexOf(KeyCenter) == 0) {    //if statements for chords whose root is the key center
 
       if (chord.quality == "major") {
         resultNumber = 0
@@ -238,7 +244,11 @@ function parseChordName(chordName: string): string[] {
     return [resultNumber,resultString]
   };
 
-  console.log(x)
+  
+
+
+
+  
 
 
   function setRoot(chord: Chord) {                              //refactor these to be methods of the chord object
@@ -274,7 +284,7 @@ function parseChordName(chordName: string): string[] {
   
   
 
-  function invertNotesAroundKeyCenter(chord: Chord) {
+  function invertNotesAroundKeyCenter(chord: Chord) {   //may use later for arrays of individual notes
     let result: number[] = [];
     for (let i = 0; i < chord.notes.length; i++) {
       console.log(chord.notes[i])
