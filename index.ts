@@ -1,6 +1,6 @@
 console.clear()
 
-let inputString = "cmajor6"    //this will be input from the user, from a textbook or something
+let inputString = "cmajor7"    //this will be input from the user, from a textbook or something
 
 
 const KeyCenter = "c"     //Keycenter should be a global variable for now. This will come from input from the user
@@ -146,14 +146,11 @@ function parseChordName(chordName: string): string[] {
   }
 
   
-function parseChordInversion() {
-  //should work with code block directly below here
-};
   
-  //[parseChordName(inputString)[2]] evaluates to [ '' ] 
+
 
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
-  console.log(x)
+
   
   
 
