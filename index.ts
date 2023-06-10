@@ -1,9 +1,9 @@
 console.clear()
 
-let inputString = "cmajor7"    //this will be input from the user, from a textbook or something
+let inputString = "cminor"    //this will be input from the user, from a textbox or something
 
 
-const KeyCenter = "c"     //Keycenter should be a global variable for now. This will come from input from the user
+const KeyCenter = "c"     //Keycenter should be a global variable for now. This will come from input from the user. Probably a form
   
 
 
@@ -55,15 +55,7 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
   
   
   
-  function shiftArray(arr: number[]): number[] {      //function for setInversion()
-    if (arr.length === 0) {
-      return arr; // If the array is empty, return it as is
-    }
-    const firstValue = arr.shift() as number; // Remove the first value and store it as a number
-    arr.push(firstValue); // Add the first value to the end of the array
-    return arr;
-  }
-  
+
   
 
   
@@ -168,6 +160,11 @@ function parseChordName(chordName: string): string[] {
         resultString = "minor"
       };
 
+      if (chord.quality == "minor") {
+        resultNumber = 0
+        resultString = "major"
+      };
+
       if (chord.quality == "major7") {
         resultNumber = 0
         resultString = "minorb6"
@@ -237,9 +234,10 @@ function parseChordName(chordName: string): string[] {
         resultNumber = 0
         resultString = "figure me out"
       };
-
-
     };
+
+
+    
     return [resultNumber,resultString]
   };
 
@@ -269,6 +267,16 @@ function parseChordName(chordName: string): string[] {
   };
 
     
+  function shiftArray(arr: number[]): number[] {      //function for setInversion()
+    if (arr.length === 0) {
+      return arr; // If the array is empty, return it as is
+    }
+    const firstValue = arr.shift() as number; // Remove the first value and store it as a number
+    arr.push(firstValue); // Add the first value to the end of the array
+    return arr;
+  }
+  
+
   function setInversion(notes: number[], inversion: number) {   //Refactor this one in the same way
   
     if (inversion >= notes.length) {
@@ -290,42 +298,15 @@ function parseChordName(chordName: string): string[] {
     }
   };
   
-  invertNotesAroundKeyCenter(x)
-  
-  
-  //testing code
-  
-       //need to refactor this so that the argument is just "Cmajor6b9", and from that it gets its attributes
-  //will look like let x = newChord(parseChord(inputString))
-  //parseChord(Cmajor7b9) will return "C","major",["b9"],1
-  
-  
 
-  
-  
-  
-  //end testing code
   
   
   
   
   //still need to make it so capitalization doesn't matter
-  
 
-  // Data flow: 1.inputString   2. [root,quality,extensions]  gets added to the chord in the constructor
+  //main priority right now is to actually sit down at the piano, play each chord type, and make a chart of the inversion for myself
+  //on paper. Then I can feed that information into my program.
 
-
-
-  //Need to refactor the addIntervalToChord function:
-  //1. Make it accept a Chord type and an interval like b5 or something. Use the integerMap for the logic.
-  
-  //2. Have a decoupled function which will scan the chordName : "C Major7 #5 ", and do logic to provide the addIntervalToChord function with which intervals to add.
-  
-  
-  
-  
-  
-  //I think for a chord, it would be cool to be able to describe all the extensions, whatever, and then after that is defined (the set of 
-  //notes in the chord is described), I can then add a suffix like (2inv, 3inv), whatever, to describe what inversion the chord is in. So 
-  //a Cmajor#5 2nd inv would be the notes C E G G#, and then it would be E G G# C because of the 2ns inversion
+  //I want to focus on getting every chord type done for each interval, in sequence. That way I won't have to go back and forth. It would be too chaotic and messy
   
