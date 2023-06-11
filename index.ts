@@ -142,10 +142,32 @@ function parseChordName(chordName: string): string[] {
     }
   
     return interval;
+  };
+
+  function invertNote(note:string):string{
+
+    let result = ''
+    let tempNumber = 0
+
+    let interval = getIntervalFromKeyCenter(note)
+
+    const intervalToResult = [7, 6, 5, 4, 3, 2, 1, 12, 11, 10, 9, 8];
+
+    tempNumber = intervalToResult[interval];
+    
+    result = MusicalNotes[tempNumber]
+
+    if (result == undefined) {    //inelegant solution to an edge case. But hey, it works
+      result = note
+    };
+
+    return result
+  };
+
+  for (let i = 0; i < 12; i++) {
+    console.log(invertNote(MusicalNotes[i]))
+
   }
-
-
-  console.log(getIntervalFromKeyCenter("ASharp"))
 
   
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
