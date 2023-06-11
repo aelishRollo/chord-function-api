@@ -38,25 +38,10 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
     "12": 19 % 12,
   };
   
-  
-  
-  
-  
-  
-  
   const MusicalNotes: string[] = ["C", "CSharp", "D", "DSharp", "E", "F", "FSharp", "G", "GSharp", "A", "ASharp", "B"];
   
             //the integer associated with each note can be accessed using the .indexOf() method 
-            // MusicalNotes.indexOf("C")   returns 0
-  
-  
-  
-  
-  
-  
-  
-
-  
+            // MusicalNotes.indexOf("C")   returns 0 
 
   
   function removeDuplicateStringsFromArray(arr:string[]): string[] {    //sub-function
@@ -139,6 +124,13 @@ function parseChordName(chordName: string): string[] {
 
   
   
+  function findFifth(note:string): string {
+    //find index of note
+    let indexOfFifth = (MusicalNotes.indexOf(note) + 7) % 12
+    let fifth = MusicalNotes[indexOfFifth]
+    return fifth
+  };
+
 
 
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
@@ -147,6 +139,18 @@ function parseChordName(chordName: string): string[] {
 
   
   
+
+
+
+
+
+  //Explanation of which chords map to what
+
+  //major <---> minor   Root is inverted fifth
+
+  //major7 <---> minor6   Root is inverted fifth
+  
+
 
   function invertChord(chord: Chord): [number,string] {   //returns invertedRoot, invertedChordQuality
     let resultNumber = 0
@@ -310,3 +314,4 @@ function parseChordName(chordName: string): string[] {
 
   //I want to focus on getting every chord type done for each interval, in sequence. That way I won't have to go back and forth. It would be too chaotic and messy
   
+
