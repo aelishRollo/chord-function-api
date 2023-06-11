@@ -70,14 +70,6 @@ function parseChordName(chordName: string): string[] {
   return result;  //returns [root, chord type, extensions]
 }
 
-  function addIntervalToChord(chord: number[], interval: string): number[] {      //not currently implimented yet.
-    const intervalValue = intervalMap[interval];
-    if (intervalValue === undefined) {
-      throw new Error(`Invalid interval: ${interval}`);
-    }
-    return [...chord, intervalValue];
-  }
-  
   
   class Chord2 {
     public notes: number[] = [];
@@ -125,7 +117,6 @@ function parseChordName(chordName: string): string[] {
   
   
   function findFifth(note:string): string {
-    //find index of note
     let indexOfFifth = (MusicalNotes.indexOf(note) + 7) % 12
     let fifth = MusicalNotes[indexOfFifth]
     return fifth
