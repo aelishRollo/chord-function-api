@@ -3,7 +3,7 @@ console.clear()
 let inputString = "cminor"    //this will be input from the user, from a textbox or something
 
 
-const KeyCenter = "c"     //Keycenter should be a global variable for now. This will come from input from the user. Probably a form
+const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user. Probably a form
   
 
 
@@ -124,9 +124,33 @@ function parseChordName(chordName: string): string[] {
 
 
 
+
+  function getIntervalFromKeyCenter(note: string): number {
+
+    let noteAsNumber = MusicalNotes.indexOf(note)
+    let keyCenterAsNumber = MusicalNotes.indexOf(KeyCenter)
+
+    let normalizedNote = noteAsNumber % 12;
+
+  
+    let interval;
+  
+    if (normalizedNote >= keyCenterAsNumber) {
+      interval = normalizedNote - keyCenterAsNumber;
+    } else {
+      interval = 12 + (normalizedNote - keyCenterAsNumber);
+    }
+  
+    return interval;
+  }
+
+
+  console.log(getIntervalFromKeyCenter("ASharp"))
+
+  
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
-  console.log(x)
-  console.log(invertChord(x))
+  //console.log(x)
+  //console.log(invertChord(x))
 
   
   
