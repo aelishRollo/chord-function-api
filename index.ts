@@ -1,6 +1,6 @@
 console.clear()
 
-let inputString = "cminor"    //this will be input from the user, from a textbox or something
+let inputString = "aminor"    //this will be input from the user, from a textbox or something
 
 
 const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user. Probably a form
@@ -38,10 +38,10 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
     "12": 19 % 12,
   };
   
-  const MusicalNotes: string[] = ["C", "CSharp", "D", "DSharp", "E", "F", "FSharp", "G", "GSharp", "A", "ASharp", "B"];
+  const MusicalNotes: string[] = ["c", "csharp", "d", "dsharp", "e", "f", "fsharp", "g", "gsharp", "a", "asharp", "b"];
   
             //the integer associated with each note can be accessed using the .indexOf() method 
-            // MusicalNotes.indexOf("C")   returns 0 
+            // MusicalNotes.indexOf("c")   returns 0 
 
   
   function removeDuplicateStringsFromArray(arr:string[]): string[] {    //sub-function
@@ -122,8 +122,7 @@ function parseChordName(chordName: string): string[] {
     return fifth
   };
 
-
-
+  
 
   function getIntervalFromKeyCenter(note: string): number {
 
@@ -187,6 +186,9 @@ function parseChordName(chordName: string): string[] {
 
   function invertChord(chord: Chord): [string,string] {   //returns invertedRoot, invertedChordQuality
     let root = chord.root
+    console.log(root)
+    console.log(findFifth(root))
+    console.log(findFifth("c"))
     let newRoot = invertNote(findFifth(root))
     let newQuality = invertChordQuality(chord.quality)
     
@@ -310,5 +312,3 @@ function parseChordName(chordName: string): string[] {
   //on paper. Then I can feed that information into my program.
 
   //I want to focus on getting every chord type done for each interval, in sequence. That way I won't have to go back and forth. It would be too chaotic and messy
-  
-
