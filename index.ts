@@ -132,7 +132,7 @@ function parseChordName(chordName: string): string[] {
 
     let normalizedNote = noteAsNumber % 12;
 
-  
+    0x10 
     let interval;
   
     if (normalizedNote >= keyCenterAsNumber) {
@@ -164,11 +164,6 @@ function parseChordName(chordName: string): string[] {
     return result
   };
 
-  for (let i = 0; i < 12; i++) {
-    console.log(invertNote(MusicalNotes[i]))
-
-  }
-
   
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
   //console.log(x)
@@ -178,7 +173,8 @@ function parseChordName(chordName: string): string[] {
   
 
 
-
+  console.log(x)
+  console.log(invertChord(x))
 
 
   //Explanation of which chords map to what
@@ -189,101 +185,65 @@ function parseChordName(chordName: string): string[] {
   
 
 
-  function invertChord(chord: Chord): [number,string] {   //returns invertedRoot, invertedChordQuality
-    let resultNumber = 0
-    let resultString = ""
-    let interval = MusicalNotes.indexOf(chord.root) - MusicalNotes.indexOf(KeyCenter)   //distance from key center to root of chord, in half steps
-
-    if (interval == 0) {    //if statements for chords whose root is the key center
-
-      if (chord.quality == "major") {
-        resultNumber = 0
-        resultString = "minor"
-      };
-
-      if (chord.quality == "minor") {
-        resultNumber = 0
-        resultString = "major"
-      };
-
-      if (chord.quality == "major7") {
-        resultNumber = 0
-        resultString = "minorb6"
-      };
-
-      if (chord.quality == "major6") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "7") {
-        resultNumber = 0
-        resultString = "minor6"
-      };
-
-      if (chord.quality == "9") {
-        resultNumber = 0
-        resultString = "figuoure me out"
-      };
-
-      if (chord.quality == "augmented") {
-        resultNumber = 7
-        resultString = "augmented"
-      };
-
-      if (chord.quality == "minor7") {
-        resultNumber = 0
-        resultString = "major6"
-      };
-
-      if (chord.quality == "minor6") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "diminished") {
-        resultNumber = 0
-        resultString = "figure me outr"
-      };
-
-      if (chord.quality == "halfDiminished") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "sus2") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "sus4") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "add2") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "add4") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-
-      if (chord.quality == "add9") {
-        resultNumber = 0
-        resultString = "figure me out"
-      };
-    };
-
-
+  function invertChord(chord: Chord): [string,string] {   //returns invertedRoot, invertedChordQuality
+    let root = chord.root
+    let newRoot = invertNote(findFifth(root))
+    let newQuality = invertChordQuality(chord.quality)
     
-    return [resultNumber,resultString]
+    return [newRoot,newQuality]
   };
 
   
+  function invertChordQuality(quality:string): string {
+    let result = ''
 
+    if (quality == "major"){
+      result = "minor"
+    }
+    if (quality == "minor"){
+      result = "major"
+    }
+    if (quality == "major7"){
+      result = "minorb6"
+    }
+    if (quality == "minorb6"){
+      result = "major7"
+    }
+    if (quality == "minor7"){
+      result = "major6"
+    }
+    if (quality == "major6"){
+      result = "minor7"
+    }
+    if (quality == "7"){
+      result = "minor6"
+    }
+    if (quality == "minor6"){
+      result = "7"
+    }
+    if (quality == "major9"){
+      result = "minor9"
+    }
+    if (quality == "minor9"){
+      result = "major9"
+    }
+    if (quality == "sus2"){
+      result = "sus4"
+    }
+    if (quality == "sus4"){
+      result = "sus2"
+    }
+    if (quality == "halfdiminished"){
+      result = "7"
+    }
+    if (quality == "diminished"){
+      result = "diminished"
+    }
+
+
+    return result
+
+  };
 
 
   
