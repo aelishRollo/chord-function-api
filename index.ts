@@ -164,16 +164,7 @@ function parseChordName(chordName: string): string[] {
   };
 
   
-  let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
-  //console.log(x)
-  //console.log(invertChord(x))
-
   
-  
-
-
-  console.log(x)
-  console.log(invertChord(x))
 
 
   //Explanation of which chords map to what
@@ -302,7 +293,14 @@ function parseChordName(chordName: string): string[] {
   };
   
 
-  
+  function main() {
+  let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
+
+  console.log(x)
+  console.log(invertChord(x))
+  }
+
+  main()
   
   
   
