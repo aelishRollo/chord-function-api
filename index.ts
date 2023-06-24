@@ -1,11 +1,9 @@
 console.clear()
 
-let inputString = "aminor"    //this will be input from the user, from a textbox or something
+let inputString = "aminorb9"    //this will be input from the user, from a textbox or something
 
 
 const KeyCenter = "C"     //Keycenter should be a global variable for now. This will come from input from the user. Probably a form
-  
-
 
 
 interface IntervalMap {     //this is all the intervals with sharps and flats, in terms of half-steps
@@ -54,7 +52,7 @@ interface IntervalMap {     //this is all the intervals with sharps and flats, i
     return result
   }
 
-  
+  //bathroom code: 1 4 7 8 9  
   //console.log(parseChordName('Cmajor7b9#11')) returns ["C", "major7", "b9#11"]
 function parseChordName(chordName: string): string[] {
   const result: string[] = ['', '', ''];
@@ -70,6 +68,7 @@ function parseChordName(chordName: string): string[] {
   return result;  //returns [root, chord type, extensions]
 }
 
+  module.exports = parseChordName;
   
   class Chord2 {
     public notes: number[] = [];
@@ -294,10 +293,12 @@ function parseChordName(chordName: string): string[] {
   
 
   function main() {
+
   let x = new Chord(parseChordName(inputString)[0],parseChordName(inputString)[1],parseChordName(inputString)[2],0)
 
-  console.log(x)
-  console.log(invertChord(x))
+  //console.log(x)
+  //console.log(invertChord(x))
+  console.log(parseChordName("cmajor7b9#11"))
   }
 
   main()
@@ -306,7 +307,7 @@ function parseChordName(chordName: string): string[] {
   
   //still need to make it so capitalization doesn't matter
 
-  //main priority right now is to actually sit down at the piano, play each chord type, and make a chart of the inversion for myself
+  //the main priority right now is to actually sit down at the piano, play each chord type, and make a chart of the inversion for myself
   //on paper. Then I can feed that information into my program.
 
   //I want to focus on getting every chord type done for each interval, in sequence. That way I won't have to go back and forth. It would be too chaotic and messy
