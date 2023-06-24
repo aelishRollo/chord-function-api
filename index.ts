@@ -64,7 +64,6 @@ function parseChordName(chordName: string): string[] {
     result[1] = matches[2]; // chord type
     result[2] = matches[3]; // extensions or alterations
   }
-
   return result;  //returns [root, chord type, extensions]
 }
 
