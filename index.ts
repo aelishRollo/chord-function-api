@@ -66,8 +66,6 @@ function parseChordName(chordName: string): string[] {
   }
   return result;  //returns [root, chord type, extensions]
 }
-
-  module.exports = parseChordName;
   
   class Chord2 {
     public notes: number[] = [];
@@ -75,6 +73,7 @@ function parseChordName(chordName: string): string[] {
     constructor(public root: string, public quality: string, public extensions: string[] = []) {}  //don't HAVE to initialize yet this way
   }
   
+//))))))))))))))))))))))))))))))))))))))))))OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoo
   
   class Chord {
   
@@ -290,6 +289,7 @@ function parseChordName(chordName: string): string[] {
     }
   };
   
+  module.exports = {parseChordName,removeDuplicateStringsFromArray};
 
   function main() {
 
