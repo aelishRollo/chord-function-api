@@ -10,6 +10,10 @@ describe('parseChordName()', () => {
     const result = parseChordName("abminor7#6");
     expect(result).toEqual(['ab', 'minor7', '#6']);
   });
+  test('parses "f#minor6add9#5" correctly', () => {
+    const result = parseChordName("f#minor6add9#5");
+    expect(result).toEqual(['f#', 'minor6add9', '#5']);
+  });
 });
 
 describe('removeDuplicateStringsFromArray', () => {
@@ -17,4 +21,5 @@ describe('removeDuplicateStringsFromArray', () => {
     const result = removeDuplicateStringsFromArray(['a','b','c','c'])
     expect(result).toEqual(['a','b','c']);
   });
+  console.log(console.log(parseChordName("f#minor6add9#5")))
 });
