@@ -174,9 +174,6 @@ function parseChordName(chordName: string): string[] {
 
   function invertChord(chord: Chord): [string,string] {   //returns invertedRoot, invertedChordQuality
     let root = chord.root
-    console.log(root)
-    console.log(findFifth(root))
-    console.log(findFifth("c"))
     let newRoot = invertNote(findFifth(root))
     let newQuality = invertChordQuality(chord.quality)
     
