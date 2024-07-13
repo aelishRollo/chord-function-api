@@ -17,49 +17,94 @@ const roleConversionMap = {
 };
 
 function getChordRole(keyCenter, chordName) {
-    // Regular expression to match chord name into root and type
+    console.log(`getChordRole - keyCenter: ${keyCenter}, chordName: ${chordName}`);
+    
     const chordPattern = /^([A-G][#b]?)(.*)$/;
     const match = chordName.match(chordPattern);
 
     if (!match) {
+        console.log("Invalid chord name");
         return "Invalid chord name";
     }
 
     const [_, chordRoot, chordType] = match;
+    console.log(`Chord root: ${chordRoot}, Chord type: ${chordType}`);
 
-    // Find the tonic index of the key center and the root index of the chord
     const tonicIndex = chromaticScale.indexOf(keyCenter);
     const chordRootIndex = chromaticScale.indexOf(chordRoot);
 
     if (tonicIndex === -1 || chordRootIndex === -1) {
+        console.log("Invalid key center or chord root");
         return "Invalid key center or chord root";
     }
 
-    // Calculate the interval between the key center and the chord root
     const interval = (chordRootIndex - tonicIndex + 12) % 12;
     const roleBase = chordRoleMap[interval] || "Unknown interval";
 
-    // Return the role of the chord
-    return `${roleBase}${chordType}`;
+    const role = `${roleBase}${chordType.toLowerCase()}`;
+    console.log(`Chord role: ${role}`);
+    return role;
 }
 
 function invertChord(chordRole) {
-    return roleConversionMap[chordRole] || "Unknown role";
+    console.log(`invertChord - chordRole: ${chordRole}`);
+    const invertedRole = roleConversionMap[chordRole] || "Unknown role";
+    console.log(`Inverted role: ${invertedRole}`);
+    return invertedRole;
+}
+
+function getChordLetter(keyCenter, chordRole) {
+    console.log(`getChordLetter - keyCenter: ${keyCenter}, chordRole: ${chordRole}`);
+    
+    const majorScale = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+    function findKeyIndex(key) {
+        return majorScale.indexOf(key);
+    }
+
+    function calculateInterval(startIndex, steps) {
+        return (startIndex + steps) % majorScale.length;
+    }
+
+    const intervals = {
+        'I': 0, 'bII': 1, 'II': 2, 'bIII': 3, 'III': 4, 'IV': 5, 'bV': 6,
+        'V': 7, 'bVI': 8, 'VI': 9, 'bVII': 10, 'VII': 11,
+        'i': 0, 'bii': 1, 'ii': 2, 'biii': 3, 'iii': 4, 'iv': 5, 'bv': 6,
+        'v': 7, 'bvi': 8, 'vi': 9, 'bvii': 10, 'vii': 11
+    };
+
+    const roleMatch = chordRole.match(/[b#]?[IViv]+/);
+    const role = roleMatch ? roleMatch[0] : '';
+    const suffix = chordRole.slice(role.length);
+
+    console.log(`Role: ${role}, Suffix: ${suffix}`);
+
+    const keyIndex = findKeyIndex(keyCenter);
+    if (keyIndex === -1) {
+        console.log("Invalid key center");
+        return "Invalid key center";
+    }
+
+    const newIndex = calculateInterval(keyIndex, intervals[role]);
+    const chordLetter = majorScale[newIndex];
+
+    const result = chordLetter + suffix;
+    console.log(`Chord letter: ${result}`);
+    return result;
+}
+
+function processChord(keyCenter, chordName) {
+    console.log(`processChord - keyCenter: ${keyCenter}, chordName: ${chordName}`);
+    const chordRole = getChordRole(keyCenter, chordName);
+    const invertedRole = invertChord(chordRole);
+    const chordLetter = getChordLetter(keyCenter, invertedRole);
+    console.log(`Final result: ${chordLetter}`);
+    return chordLetter;
 }
 
 // Example usage
 const keyCenter = "C";
-const chordName = "FMaj7";
-const chordRole = getChordRole(keyCenter, chordName); // Output: IVmaj7
-const invertedRole = invertChord(chordRole); // Output: v-b6
+const chordName = "C";
+const result = processChord(keyCenter, chordName);
 
-console.log(chordRole); // Output: IVmaj7
-console.log(invertedRole); // Output: v-b6
-
-const keyCenter2 = "G";
-const chordName2 = "A#7";
-const chordRole2 = getChordRole(keyCenter2, chordName2); // Output: bIII7
-const invertedRole2 = invertChord(chordRole2); // Output: vi-6
-
-console.log(chordRole2); // Output: bIII7
-console.log(invertedRole2); // Output: vi-6
+console.log(result); // Expected Output: "C-b6"
