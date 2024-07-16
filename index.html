@@ -27,7 +27,11 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    resultDiv.textContent = `Chord Function: ${data.chordFunction}`;
+                    if (data.error) {
+                        resultDiv.textContent = `Error: ${data.error}`;
+                    } else {
+                        resultDiv.textContent = `Chord Function: ${data.chordFunction}`;
+                    }
                 })
                 .catch(error => {
                     resultDiv.textContent = `Error: ${error}`;
