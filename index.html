@@ -10,13 +10,17 @@
             const rootSelect = document.getElementById('root');
             const qualitySelect = document.getElementById('quality');
             const resultDiv = document.getElementById('result');
+            const invertResultDiv = document.getElementById('invertResult');
             const getChordFunctionButton = document.getElementById('getChordFunction');
+            const invertChordButton = document.getElementById('invertChord');
 
             getChordFunctionButton.addEventListener('click', () => {
                 const keyCenter = keyCenterSelect.value;
                 const root = rootSelect.value;
                 const quality = qualitySelect.value;
                 const chordName = root + quality;
+
+                console.log(`getChordFunction - chordName: ${chordName}, keyCenter: ${keyCenter}`);
 
                 fetch('/getChordFunction', {
                     method: 'POST',
@@ -37,6 +41,33 @@
                     resultDiv.textContent = `Error: ${error}`;
                 });
             });
+
+            invertChordButton.addEventListener('click', () => {
+                const root = rootSelect.value;
+                const quality = qualitySelect.value;
+                const chordName = root + quality;
+
+                console.log(`invertChord - chordName: ${chordName}`);
+
+                fetch('/invertChordQuality', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ chordName })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        invertResultDiv.textContent = `Error: ${data.error}`;
+                    } else {
+                        invertResultDiv.textContent = `Inverted Chord: ${data.invertedChord}`;
+                    }
+                })
+                .catch(error => {
+                    invertResultDiv.textContent = `Error: ${error}`;
+                });
+            });
         });
     </script>
 </head>
@@ -46,39 +77,39 @@
         <label for="keyCenter">Key Center:</label>
         <select id="keyCenter">
             <option value="C">C</option>
-            <option value="C#">C#</option>
+            <option value="Db">Db</option>
             <option value="D">D</option>
-            <option value="D#">D#</option>
+            <option value="Eb">Eb</option>
             <option value="E">E</option>
             <option value="F">F</option>
-            <option value="F#">F#</option>
+            <option value="Gb">Gb</option>
             <option value="G">G</option>
-            <option value="G#">G#</option>
+            <option value="Ab">Ab</option>
             <option value="A">A</option>
-            <option value="A#">A#</option>
+            <option value="Bb">Bb</option>
             <option value="B">B</option>
         </select>
 
         <label for="root">Chord Root:</label>
         <select id="root">
             <option value="C">C</option>
-            <option value="C#">C#</option>
+            <option value="Db">Db</option>
             <option value="D">D</option>
-            <option value="D#">D#</option>
+            <option value="Eb">Eb</option>
             <option value="E">E</option>
             <option value="F">F</option>
-            <option value="F#">F#</option>
+            <option value="Gb">Gb</option>
             <option value="G">G</option>
-            <option value="G#">G#</option>
+            <option value="Ab">Ab</option>
             <option value="A">A</option>
-            <option value="A#">A#</option>
+            <option value="Bb">Bb</option>
             <option value="B">B</option>
         </select>
 
         <label for="quality">Chord Quality:</label>
         <select id="quality">
-            <option value="Maj">Maj</option>
-            <option value="Maj7">Maj7</option>
+            <option value="Major">Major</option>
+            <option value="Major7">Major7</option>
             <option value="7">7</option>
             <option value="(Augmented)">(Augmented)</option>
             <option value="6">6</option>
@@ -90,8 +121,10 @@
         </select>
 
         <button id="getChordFunction">Get Chord Function</button>
+        <button id="invertChord">Invert Chord</button>
     </form>
 
     <div id="result"></div>
+    <div id="invertResult"></div>
 </body>
 </html>

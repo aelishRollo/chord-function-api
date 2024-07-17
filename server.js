@@ -1,15 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { getChordFunctionFromName } = require('./chordFunctions'); // Ensure you have this module
+const { getChordFunctionFromName, invertChordQuality } = require('./chordFunctions'); 
 
 const app = express();
 const PORT = 8000;
-
-// let myObject = {
-//     name: 'Prometheus',
-//     age: 9001,
-//     bipedal: true
-// }
 
 app.use(bodyParser.json()); // Middleware to parse JSON bodies
 
@@ -18,17 +12,26 @@ app.get('/', (req, res) => {
     console.log('You are at the main route!');
 });
 
-// app.get('/api', (req, res) => {
-//     res.json(myObject)
-//     console.log('User made a request, yo')
-// })
-
 app.post('/getChordFunction', (req, res) => {
     const { chordName, keyCenter } = req.body;
+    console.log(`POST /getChordFunction - chordName: ${chordName}, keyCenter: ${keyCenter}`);
     try {
         const chordFunction = getChordFunctionFromName(chordName, keyCenter);
         res.json({ chordFunction });
     } catch (error) {
+        console.error(error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.post('/invertChordQuality', (req, res) => {
+    const { chordName } = req.body;
+    console.log(`POST /invertChordQuality - chordName: ${chordName}`);
+    try {
+        const invertedChord = invertChordQuality(chordName);
+        res.json({ invertedChord });
+    } catch (error) {
+        console.error(error);
         res.status(400).json({ error: error.message });
     }
 });
