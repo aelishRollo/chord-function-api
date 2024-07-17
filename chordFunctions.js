@@ -1,5 +1,17 @@
-const chromaticScale = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-const romanNumerals = ['I', '#I', 'II', '#II', 'III', 'IV', '#IV', 'V', '#V', 'VI', '#VI', 'VII'];
+const chromaticScale = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const romanNumerals = ['I', 'bII', 'II', 'bIII', 'III', 'IV', 'bV', 'V', 'bVI', 'VI', 'bVII', 'VII'];
+
+const sharpToFlatMap = {
+  'C#': 'Db',
+  'D#': 'Eb',
+  'F#': 'Gb',
+  'G#': 'Ab',
+  'A#': 'Bb'
+};
+
+function convertSharpToFlat(note) {
+  return sharpToFlatMap[note] || note;
+}
 
 function getChordFunctionFromName(chordName, key) {
   const qualityPattern = /^(.*?)(Maj|Maj7|7|6|7b5|Minor|Minor7|°|ø7|\(Augmented\))$/;
@@ -8,8 +20,11 @@ function getChordFunctionFromName(chordName, key) {
     throw new Error('Invalid chord name');
   }
 
-  const rootNote = match[1];
+  let rootNote = match[1];
   const quality = match[2];
+
+  rootNote = convertSharpToFlat(rootNote);
+  key = convertSharpToFlat(key);
 
   const rootIndex = chromaticScale.indexOf(rootNote);
   const keyIndex = chromaticScale.indexOf(key);
