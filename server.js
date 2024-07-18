@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/API/getChordFunction/:keyCenter/:chordRoot/:quality', (req, res) => {
+app.get('/API/:keyCenter/:chordRoot/:quality', (req, res) => {
     const { keyCenter, chordRoot, quality } = req.params;
     const chordName = chordRoot + quality;
 

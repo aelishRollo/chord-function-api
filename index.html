@@ -43,8 +43,8 @@
         <p>Welcome to the Chord Function API! This API allows you to determine the chord function based on the key center, chord root, and chord quality.</p>
         
         <h2>How to Use</h2>
-        <p>To use the API, make a POST request to the following URL:</p>
-        <pre><code>http://localhost:8000/API/getChordFunction/:keyCenter/:chordRoot/:quality</code></pre>
+        <p>To use the API, make a GET request to the following URL:</p>
+        <pre><code>https://chord-function-calculator-03b3fc20902a.herokuapp.com/API/C/G/Major7</code></pre>
         
         <h3>Parameters</h3>
         <ul>
@@ -55,7 +55,7 @@
         
         <h3>Example</h3>
         <p>To get the chord function for a G Major7 chord in the key of C, you would make the following request:</p>
-        <pre><code>POST http://localhost:8000/API/getChordFunction/C/G/Major7</code></pre>
+        <pre><code>GET https://chord-function-calculator-03b3fc20902a.herokuapp.com/API/C/G/Major7</code></pre>
         
         <h3>Response</h3>
         <p>The response will be a JSON object containing the chord function:</p>
@@ -67,7 +67,7 @@
         <p>You can test the API using a tool like <a href="https://www.postman.com/" target="_blank">Postman</a> or <a href="https://curl.se/" target="_blank">cURL</a>.</p>
         
         <h3>Using cURL</h3>
-        <pre><code>curl -X POST http://localhost:8000/API/getChordFunction/C/G/Major7</code></pre>
+        <pre><code>curl -X POST https://chord-function-calculator-03b3fc20902a.herokuapp.com/API/C/G/Major7</code></pre>
     </div>
 </body>
 </html>
