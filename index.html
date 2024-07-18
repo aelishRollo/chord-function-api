@@ -3,128 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chord Function Finder</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const keyCenterSelect = document.getElementById('keyCenter');
-            const rootSelect = document.getElementById('root');
-            const qualitySelect = document.getElementById('quality');
-            const resultDiv = document.getElementById('result');
-            const invertResultDiv = document.getElementById('invertResult');
-            const getChordFunctionButton = document.getElementById('getChordFunction');
-            const invertChordButton = document.getElementById('invertChord');
-
-            getChordFunctionButton.addEventListener('click', () => {
-                const keyCenter = keyCenterSelect.value;
-                const root = rootSelect.value;
-                const quality = qualitySelect.value;
-                const chordName = root + quality;
-
-                console.log(`getChordFunction - chordName: ${chordName}, keyCenter: ${keyCenter}`);
-
-                fetch('/getChordFunction', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ chordName, keyCenter })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        resultDiv.textContent = `Error: ${data.error}`;
-                    } else {
-                        resultDiv.textContent = `Chord Function: ${data.chordFunction}`;
-                    }
-                })
-                .catch(error => {
-                    resultDiv.textContent = `Error: ${error}`;
-                });
-            });
-
-            invertChordButton.addEventListener('click', () => {
-                const root = rootSelect.value;
-                const quality = qualitySelect.value;
-                const chordName = root + quality;
-
-                console.log(`invertChord - chordName: ${chordName}`);
-
-                fetch('/invertChordQuality', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ chordName })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        invertResultDiv.textContent = `Error: ${data.error}`;
-                    } else {
-                        invertResultDiv.textContent = `Inverted Chord: ${data.invertedChord}`;
-                    }
-                })
-                .catch(error => {
-                    invertResultDiv.textContent = `Error: ${error}`;
-                });
-            });
-        });
-    </script>
+    <title>Chord Function API Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            color: #c7254e;
+            background-color: #f9f2f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Chord Function Finder</h1>
-    <form id="chordForm" onsubmit="return false;">
-        <label for="keyCenter">Key Center:</label>
-        <select id="keyCenter">
-            <option value="C">C</option>
-            <option value="Db">Db</option>
-            <option value="D">D</option>
-            <option value="Eb">Eb</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-            <option value="Gb">Gb</option>
-            <option value="G">G</option>
-            <option value="Ab">Ab</option>
-            <option value="A">A</option>
-            <option value="Bb">Bb</option>
-            <option value="B">B</option>
-        </select>
-
-        <label for="root">Chord Root:</label>
-        <select id="root">
-            <option value="C">C</option>
-            <option value="Db">Db</option>
-            <option value="D">D</option>
-            <option value="Eb">Eb</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-            <option value="Gb">Gb</option>
-            <option value="G">G</option>
-            <option value="Ab">Ab</option>
-            <option value="A">A</option>
-            <option value="Bb">Bb</option>
-            <option value="B">B</option>
-        </select>
-
-        <label for="quality">Chord Quality:</label>
-        <select id="quality">
-            <option value="Major">Major</option>
-            <option value="Major7">Major7</option>
-            <option value="7">7</option>
-            <option value="(Augmented)">(Augmented)</option>
-            <option value="6">6</option>
-            <option value="7b5">7b5</option>
-            <option value="Minor">Minor</option>
-            <option value="Minor7">Minor7</option>
-            <option value="°">° (Diminished)</option>
-            <option value="ø7">ø7 (Half-Diminished 7)</option>
-        </select>
-
-        <button id="getChordFunction">Get Chord Function</button>
-        <button id="invertChord">Invert Chord</button>
-    </form>
-
-    <div id="result"></div>
-    <div id="invertResult"></div>
+    <div class="container">
+        <h1>Chord Function API Guide</h1>
+        <p>Welcome to the Chord Function API! This API allows you to determine the chord function based on the key center, chord root, and chord quality.</p>
+        
+        <h2>How to Use</h2>
+        <p>To use the API, make a POST request to the following URL:</p>
+        <pre><code>http://localhost:8000/API/getChordFunction/:keyCenter/:chordRoot/:quality</code></pre>
+        
+        <h3>Parameters</h3>
+        <ul>
+            <li><code>:keyCenter</code> - The key center (e.g., C, G, D#)</li>
+            <li><code>:chordRoot</code> - The root of the chord (e.g., C, G, D#)</li>
+            <li><code>:quality</code> - The quality of the chord (e.g., Major, Major7, Minor)</li>
+        </ul>
+        
+        <h3>Example</h3>
+        <p>To get the chord function for a G Major7 chord in the key of C, you would make the following request:</p>
+        <pre><code>POST http://localhost:8000/API/getChordFunction/C/G/Major7</code></pre>
+        
+        <h3>Response</h3>
+        <p>The response will be a JSON object containing the chord function:</p>
+        <pre><code>{
+    "chordFunction": "VIMajor7"
+}</code></pre>
+        
+        <h2>Testing the API</h2>
+        <p>You can test the API using a tool like <a href="https://www.postman.com/" target="_blank">Postman</a> or <a href="https://curl.se/" target="_blank">cURL</a>.</p>
+        
+        <h3>Using cURL</h3>
+        <pre><code>curl -X POST http://localhost:8000/API/getChordFunction/C/G/Major7</code></pre>
+    </div>
 </body>
 </html>
