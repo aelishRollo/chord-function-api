@@ -47,6 +47,24 @@ See my website for more information!
     <img src="https://img.shields.io/static/v1?label=|&message=HEROKU&color=cdd148&style=plastic&logo=heroku"/>
     <img src="https://img.shields.io/static/v1?label=|&message=GIT&color=cbb148&style=plastic&logo=git"/>
 </p>
+
+
+## Optimizations
+
+I plan to extend the scope of the currently existing testing and to make the error handling more robust:
+
+This includes unit tests for chord calculations and input validation, integration tests for API endpoints and error responses, and performance tests to ensure quick response times. I will standardize error messages, and validate inputs thoroughly.
+
+Future improvements include supporting more chord extended chords, optimizing scalability, providing comprehensive documentation, and enhancing security measures.
+
+## Lessons Learned:
+
+I saw firsthand the value of test-driven-development! It greatly increased my development velocity as well as my confidence in the stability of my code. 
+
+I also learned that building an API is a lot more fun than I had imagined. I thought I'd like it but it was actually very enjoyable! 
+
+Finally, I learned about best practices for standardizing the way chords are represented in code. 
+
 <h1 align="center">Connect</h1>
 <p align="center">
   <a href="https://rollison.dev" target="_blank">
