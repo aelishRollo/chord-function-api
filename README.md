@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/7b3f7cF.jpg" width="100%">
+<img src="https://i.imgur.com/MHsfol1.jpg" width="100%">
 <p align="center">
   <a href="https://rollison.dev" target="_blank">
     <img src="https://img.shields.io/static/v1?label=|&message=WEBSITE&color=23555f&style=plastic&logo=react&logo-color=white"/>
