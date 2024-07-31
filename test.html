@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chord Function Calculator Test</title>
+    <script src="chordFunctions.js"></script>
+</head>
+<body>
+    <h1>Chord Function Calculator Test</h1>
+    <form id="chordForm">
+        <label for="keyCenter">Key Center:</label>
+        <select id="keyCenter" required>
+            <option value="C">C</option>
+            <option value="C#">C#</option>
+            <option value="D">D</option>
+            <option value="D#">D#</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="F#">F#</option>
+            <option value="G">G</option>
+            <option value="G#">G#</option>
+            <option value="A">A</option>
+            <option value="A#">A#</option>
+            <option value="B">B</option>
+        </select>
+        <br>
+        <label for="chordRoot">Chord Root:</label>
+        <select id="chordRoot" required>
+            <option value="C">C</option>
+            <option value="C#">C#</option>
+            <option value="D">D</option>
+            <option value="D#">D#</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="F#">F#</option>
+            <option value="G">G</option>
+            <option value="G#">G#</option>
+            <option value="A">A</option>
+            <option value="A#">A#</option>
+            <option value="B">B</option>
+        </select>
+        <br>
+        <label for="chordQuality">Chord Quality:</label>
+        <select id="chordQuality" required>
+            <option value="Major">Major</option>
+            <option value="Minor">Minor</option>
+            <option value="Augmented">Augmented</option>
+            <option value="Diminished">Diminished</option>
+            <option value="Major7">Major7</option>
+            <option value="Minor7">Minor7</option>
+            <option value="Dominant7">Dominant7</option>
+            <option value="HalfDiminished">Half Diminished</option>
+            <option value="Diminished7">Diminished7</option>
+            <option value="Sus4">Sus4</option>
+            <option value="Sus2">Sus2</option>
+        </select>
+        <br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('chordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const keyCenter = document.getElementById('keyCenter').value;
+            const chordRoot = document.getElementById('chordRoot').value;
+            const chordQuality = document.getElementById('chordQuality').value;
+            const chordName = chordRoot + chordQuality;
+            
+            try {
+                const chordFunction = getChordFunctionFromName(chordName, keyCenter);
+                document.getElementById('result').textContent = `Chord Function: ${chordFunction}`;
+            } catch (error) {
+                document.getElementById('result').textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
