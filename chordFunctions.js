@@ -2,11 +2,11 @@ const chromaticScale = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'B
 const romanNumerals = ['I', 'bII', 'II', 'bIII', 'III', 'IV', 'bV', 'V', 'bVI', 'VI', 'bVII', 'VII'];
 
 const sharpToFlatMap = {
-  'C#': 'Db',
-  'D#': 'Eb',
-  'F#': 'Gb',
-  'G#': 'Ab',
-  'A#': 'Bb'
+  'C#': 'Db', 'c#': 'Db',
+  'D#': 'Eb', 'd#': 'Eb',
+  'F#': 'Gb', 'f#': 'Gb',
+  'G#': 'Ab', 'g#': 'Ab',
+  'A#': 'Bb', 'a#': 'Bb'
 };
 
 const chordQualityMap = {
@@ -24,29 +24,32 @@ const chordQualityMap = {
 };
 
 function convertSharpToFlat(note) {
-  return sharpToFlatMap[note] || note;
+  return sharpToFlatMap[note] || note.toUpperCase();
 }
 
 function getChordFunctionFromName(key, chordRoot, chordQuality) {
   try {
-    if (!chordRoot || !chordQuality || !key) {
-      throw new Error('Chord root, quality, and key are required');
+    if (!key || !chordRoot || !chordQuality) {
+      throw new Error('Key, chord root, and quality are required');
     }
 
-    const rootPattern = /^[A-G][b#]?$/;
+    key = convertSharpToFlat(key);
+    chordRoot = convertSharpToFlat(chordRoot);
+    chordQuality = chordQuality.charAt(0).toUpperCase() + chordQuality.slice(1).toLowerCase();
+
+    const rootPattern = /^[A-G][b#]?$/i;
     if (!rootPattern.test(chordRoot)) {
       throw new Error('Invalid chord root');
     }
 
+    if (!chromaticScale.includes(key)) {
+      throw new Error('Invalid key');
+    }
+    if (!chromaticScale.includes(chordRoot)) {
+      throw new Error('Invalid chord root note');
+    }
     if (!Object.keys(chordQualityMap).includes(chordQuality)) {
       throw new Error('Invalid chord quality');
-    }
-
-    chordRoot = convertSharpToFlat(chordRoot);
-    key = convertSharpToFlat(key);
-
-    if (!chromaticScale.includes(chordRoot) || !chromaticScale.includes(key)) {
-      throw new Error('Invalid root note or key');
     }
 
     const rootIndex = chromaticScale.indexOf(chordRoot);
