@@ -28,27 +28,38 @@ function convertSharpToFlat(note) {
 }
 
 function getChordFunctionFromName(chordName, key) {
-  const qualityPattern = /^(.*?)(Major|Minor|Augmented|Diminished|Major7|Minor7|Dominant7|HalfDiminished|Diminished7|Sus4|Sus2)$/;
-  const match = chordName.match(qualityPattern);
-  console.log(`getChordFunctionFromName - chordName: ${chordName}, key: ${key}`);
-  console.log(`match: ${JSON.stringify(match)}`);
+  try {
+    if (!chordName || !key) {
+      throw new Error('Chord name and key are required');
+    }
 
-  let rootNote = match[1];
-  const quality = match[2];
+    const qualityPattern = /^([A-G][b#]?)(Major|Minor|Augmented|Diminished|Major7|Minor7|Dominant7|HalfDiminished|Diminished7|Sus4|Sus2)$/;
+    const match = chordName.match(qualityPattern);
 
-  rootNote = convertSharpToFlat(rootNote);
-  key = convertSharpToFlat(key);
+    if (!match) {
+      throw new Error('Invalid chord name format');
+    }
 
-  const rootIndex = chromaticScale.indexOf(rootNote);
-  const keyIndex = chromaticScale.indexOf(key);
+    let rootNote = match[1];
+    const quality = match[2];
 
-  console.log(`rootNote: ${rootNote}, key: ${key}`);
-  console.log(`rootIndex: ${rootIndex}, keyIndex: ${keyIndex}`);
+    rootNote = convertSharpToFlat(rootNote);
+    key = convertSharpToFlat(key);
 
-  const degree = (rootIndex - keyIndex + chromaticScale.length) % chromaticScale.length;
+    if (!chromaticScale.includes(rootNote) || !chromaticScale.includes(key)) {
+      throw new Error('Invalid root note or key');
+    }
 
-  console.log(`degree: ${degree}, romanNumeral: ${romanNumerals[degree]}`);
-  return `${romanNumerals[degree]}${chordQualityMap[quality]}`;
+    const rootIndex = chromaticScale.indexOf(rootNote);
+    const keyIndex = chromaticScale.indexOf(key);
+
+    const degree = (rootIndex - keyIndex + chromaticScale.length) % chromaticScale.length;
+
+    return `${romanNumerals[degree]}${chordQualityMap[quality]}`;
+  } catch (error) {
+    console.error(`Error in getChordFunctionFromName: ${error.message}`);
+    throw error;
+  }
 }
 
 module.exports = { getChordFunctionFromName };
