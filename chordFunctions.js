@@ -27,35 +27,34 @@ function convertSharpToFlat(note) {
   return sharpToFlatMap[note] || note;
 }
 
-function getChordFunctionFromName(chordName, key) {
+function getChordFunctionFromName(chordRoot, chordQuality, key) {
   try {
-    if (!chordName || !key) {
-      throw new Error('Chord name and key are required');
+    if (!chordRoot || !chordQuality || !key) {
+      throw new Error('Chord root, quality, and key are required');
     }
 
-    const qualityPattern = /^([A-G][b#]?)(Major|Minor|Augmented|Diminished|Major7|Minor7|Dominant7|HalfDiminished|Diminished7|Sus4|Sus2)$/;
-    const match = chordName.match(qualityPattern);
-
-    if (!match) {
-      throw new Error('Invalid chord name format');
+    const rootPattern = /^[A-G][b#]?$/;
+    if (!rootPattern.test(chordRoot)) {
+      throw new Error('Invalid chord root');
     }
 
-    let rootNote = match[1];
-    const quality = match[2];
+    if (!Object.keys(chordQualityMap).includes(chordQuality)) {
+      throw new Error('Invalid chord quality');
+    }
 
-    rootNote = convertSharpToFlat(rootNote);
+    chordRoot = convertSharpToFlat(chordRoot);
     key = convertSharpToFlat(key);
 
-    if (!chromaticScale.includes(rootNote) || !chromaticScale.includes(key)) {
+    if (!chromaticScale.includes(chordRoot) || !chromaticScale.includes(key)) {
       throw new Error('Invalid root note or key');
     }
 
-    const rootIndex = chromaticScale.indexOf(rootNote);
+    const rootIndex = chromaticScale.indexOf(chordRoot);
     const keyIndex = chromaticScale.indexOf(key);
 
     const degree = (rootIndex - keyIndex + chromaticScale.length) % chromaticScale.length;
 
-    return `${romanNumerals[degree]}${chordQualityMap[quality]}`;
+    return `${romanNumerals[degree]}${chordQualityMap[chordQuality]}`;
   } catch (error) {
     console.error(`Error in getChordFunctionFromName: ${error.message}`);
     throw error;
