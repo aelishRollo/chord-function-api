@@ -34,7 +34,7 @@ function getChordFunctionFromName(key, chordRoot, chordQuality) {
     }
 
     key = convertSharpToFlat(key);
-    chordRoot = convertSharpToFlat(chordRoot);
+    chordRoot = convertSharpToFlat(decodeURIComponent(chordRoot));
     chordQuality = chordQuality.charAt(0).toUpperCase() + chordQuality.slice(1).toLowerCase();
 
     const rootPattern = /^[A-G][b#]?$/i;
