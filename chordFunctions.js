@@ -27,7 +27,7 @@ function convertSharpToFlat(note) {
   return sharpToFlatMap[note] || note;
 }
 
-function getChordFunctionFromName(chordRoot, chordQuality, key) {
+function getChordFunctionFromName(key, chordRoot, chordQuality) {
   try {
     if (!chordRoot || !chordQuality || !key) {
       throw new Error('Chord root, quality, and key are required');

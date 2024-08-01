@@ -13,17 +13,17 @@ app.get('/', (req, res) => {
 
 app.get('/API/:keyCenter/:chordRoot/:quality', (req, res) => {
     const { keyCenter, chordRoot, quality } = req.params;
-    const chordName = chordRoot + quality;
 
-    console.log(`Received request with chordName: ${chordName}, keyCenter: ${keyCenter}`);
+    console.log(`Received request with keyCenter: ${keyCenter}, chordRoot: ${chordRoot}, quality: ${quality}`);
 
     try {
-        const chordFunction = getChordFunctionFromName(chordName, keyCenter);
+        const chordFunction = getChordFunctionFromName(keyCenter, chordRoot, quality);
         res.json({ chordFunction });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
+
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server listening on ${PORT}`);
