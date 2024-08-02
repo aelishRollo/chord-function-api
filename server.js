@@ -11,8 +11,8 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/API/:keyCenter/:chordRoot/:quality', (req, res) => {
-    const { keyCenter, chordRoot, quality } = req.params;
+app.get('/API', (req, res) => {
+    const { keyCenter, chordRoot, quality } = req.query;
 
     console.log(`Received request with keyCenter: ${keyCenter}, chordRoot: ${chordRoot}, quality: ${quality}`);
 
@@ -23,6 +23,7 @@ app.get('/API/:keyCenter/:chordRoot/:quality', (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
 
 
 app.listen(process.env.PORT || PORT, () => {

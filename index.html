@@ -6,68 +6,115 @@
     <title>Chord Function API Guide</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
         }
         .container {
             max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
         }
         h1 {
             text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
         pre {
-            background: #eee;
-            padding: 10px;
+            background: #f8f9fa;
+            padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
+            border: 1px solid #e9ecef;
         }
         code {
-            color: #c7254e;
-            background-color: #f9f2f4;
+            color: #e83e8c;
+            background-color: #f8f9fa;
             padding: 2px 4px;
             border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Chord Function API Guide</h1>
-        <p>Welcome to the Chord Function API! This API allows you to determine the chord function based on the key center, chord root, and chord quality.</p>
+        <p>Welcome to the Chord Function API! This API allows you to determine the chord function based on the key center, chord root, and chord quality.
+            This is an API written by a nerd, but whether you're a nerd or not I hope this is of use to you.
+        </p>
         
+    
+
         <h2>How to Use</h2>
-        <p>To use the API, make a GET request to the following URL:</p>
-        <pre><code>https://chord-function-calculator-03b3fc20902a.herokuapp.com/API/C/G/Major7</code></pre>
-        
-        <h3>Parameters</h3>
-        <ul>
-            <li><code>:keyCenter</code> - The key center (e.g., C, G, D#)</li>
-            <li><code>:chordRoot</code> - The root of the chord (e.g., C, G, D#)</li>
-            <li><code>:quality</code> - The quality of the chord (e.g., Major, Major7, Minor)</li>
-        </ul>
-        
-        <h3>Example</h3>
-        <p>To get the chord function for a G Major7 chord in the key of C, you would make the following request:</p>
-        <pre><code>GET https://chord-function-calculator-03b3fc20902a.herokuapp.com/API/C/G/Major7</code></pre>
+        <p>To get the chord function for a G Major7 chord in the key of C, make the following request:</p>
+        <pre><code>GET https://chord-function-calculator-03b3fc20902a.herokuapp.com/API?keyCenter=C&chordRoot=G&quality=Major7</code></pre>
         
         <h3>Response</h3>
         <p>The response will be a JSON object containing the chord function:</p>
         <pre><code>{
-    "chordFunction": "VIMajor7"
+    "chordFunction": "Vmaj7"
 }</code></pre>
+
+        <h3>Query Structure</h3>
+        <p>The API uses query parameters to receive input. Here's a breakdown of the structure:</p>
+        <ul>
+            <li>The base URL is followed by <code>/API?</code></li>
+            <li>Each parameter is in the format <code>key=value</code></li>
+            <li>Parameters are separated by the ampersand symbol <code>&</code></li>
+        </ul>
+        <p>For example, in the URL:</p>
+        <pre><code>https://chord-function-calculator-03b3fc20902a.herokuapp.com/API?keyCenter=C&chordRoot=G&quality=Major7</code></pre>
+        <ul>
+            <li><code>keyCenter=C</code> is the first parameter</li>
+            <li><code>&</code> separates the first and second parameters</li>
+            <li><code>chordRoot=G</code> is the second parameter</li>
+            <li><code>&</code> separates the second and third parameters</li>
+            <li><code>quality=Major7</code> is the third parameter</li>
+        </ul>
+
+        <h3>Query Parameters</h3>
+        <ul>
+            <li><code>keyCenter</code> - The key center (e.g., C, G, F#)</li>
+            <li><code>chordRoot</code> - The root of the chord (e.g., C, G, F#)</li>
+            <li><code>quality</code> - The quality of the chord (e.g., Major, Major7, Minor)</li>
+        </ul>
+        
+        <h3>Notes with Sharps</h3>
+        <p>When using notes with sharps (e.g., C#, F#), you need to encode the '#' symbol in the URL. Use '%23' instead of '#'. For example:</p>
+        <ul>
+            <li>C# becomes C%23</li>
+            <li>F# becomes F%23</li>
+        </ul>
+        <p>Example request with a sharp note:</p>
+        <pre><code>GET https://chord-function-calculator-03b3fc20902a.herokuapp.com/API?keyCenter=F%23&chordRoot=B&quality=Minor7</code></pre>
         
         <h2>Testing the API</h2>
         <p>You can test the API using a tool like <a href="https://www.postman.com/" target="_blank">Postman</a> or <a href="https://curl.se/" target="_blank">cURL</a>.</p>
         
         <h3>Using cURL</h3>
-        <pre><code>curl -X POST https://chord-function-calculator-03b3fc20902a.herokuapp.com/API/C/G/Major7</code></pre>
+        <pre><code>curl -X GET "https://chord-function-calculator-03b3fc20902a.herokuapp.com/API?keyCenter=C&chordRoot=G&quality=Major7"</code></pre>
+        
+        <h3>Using cURL with Sharp Notes</h3>
+        <pre><code>curl -X GET "https://chord-function-calculator-03b3fc20902a.herokuapp.com/API?keyCenter=F%23&chordRoot=B&quality=Minor7"</code></pre>
     </div>
 </body>
 </html>
